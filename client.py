@@ -6,7 +6,7 @@ import struct
 import signal
 import sys
 import time
-
+import encrypting
 
 
 def signal_handler(sig, frame):
@@ -34,14 +34,11 @@ def readwrite_packet(pk_type, filename, mode, blcksize, windowsize, password):
     pckt += bytes(str(windowsize), 'utf-8')
     pckt += b'\x00'
 
-    ##### :p
-    #print(password)
-    #crypt.update(b'password')
-    #print(crypt.hexdigest().encode())
-    #pckt += crypt.hexdigest().encode()
-    pckt += password.encode()
+    # Encrypt Password
+    encrypt = encrypting.encrypt(password.encode())
+    print(encrypt)
+    pckt += encrypt
     pckt += b'\x00'
-    #####
     return pckt
 
 def data_packet(pk_number, data):

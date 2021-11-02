@@ -7,6 +7,7 @@ import struct
 import sys
 import time
 import select
+import encrypting
 
 TIMEOUT=3.0
 TIMEOUT_OACK=10.0
@@ -169,7 +170,7 @@ if args.single_port:
 
             name = arr[0][1:].decode()
             print(name)
-
+            password = encrypting.decrypt(arr[-1]).decode()
             print(arr)
 
             blcksize = 512
@@ -222,8 +223,8 @@ else:
 
                 name = arr[0][1:].decode()
                 print(name)
-                password = arr[-1].decode()
-                
+
+                password = encrypting.decrypt(arr[-1]).decode()
 
                 if password == "admin":
                     print(arr)
